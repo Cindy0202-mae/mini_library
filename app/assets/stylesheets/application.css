@@ -92,3 +92,67 @@
 .d-flex .btn {
   margin-left: 10px;
 }
+
+.book-cover {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 100px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.book-cover-show {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 200px;
+  margin-top: 70px;
+  margin-bottom: 60px;
+}
+
+.main-content {
+  margin-top: 60px;
+  /* max-width: 1200px; */
+}
+
+.results {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.card-image {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 250px;
+  margin: auto;
+}
+
+.card-body-search {
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+
+
+.book-title {
+  font-size: 2rem; /* Adjust the size as needed */
+  font-weight: bold;
+  margin-bottom: 1rem;
+}

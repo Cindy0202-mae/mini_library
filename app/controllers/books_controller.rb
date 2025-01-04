@@ -7,17 +7,23 @@ class BooksController < ApplicationController
   # GET /books or /books.json
   def index
     if params[:query].present?
-      query = "%#{params[:query]}%"
+      query = params[:query]
+      # Search the local database
       @books = Book.where("LOWER(title) LIKE LOWER(?) OR LOWER(author) LIKE LOWER(?) OR LOWER(genre) LIKE LOWER(?)",
-                          query, query, query)
+                          "%#{query}", "%#{query}", "%#{query}")
+
+      # Fetch books from Google Books API
+
+      @google_books = fetch_books_from_google(query)
     else
       @books = Book.all
+      @google_books = []
     end
   end
 
   # GET /books/1 or /books/1.json
   def show
-    @google_book = fetch_book_details(@book.title)
+    @google_book = fetch_books_from_google(@book.title)&.first
   end
 
   # GET /books/new
@@ -69,18 +75,18 @@ class BooksController < ApplicationController
 
   private
 
-  def fetch_book_details(query)
+  def fetch_books_from_google(query)
     base_url = "https://www.googleapis.com/books/v1/volumes"
     api_key = ENV['GOOGLE_BOOKS_API_KEY']
-    url = "#{base_url}?q=#{URI.encode_www_form_component(query)}&key=#{api_key}"
+    url = "#{base_url}?q=#{URI.encode_www_form_component(query)}&langRestrict=en&key=#{api_key}"
 
     response = Net::HTTP.get(URI(url))
     json_response = JSON.parse(response)
 
-    json_response["items"]&.first&.dig("volumeInfo")  # Return the first book's info (if any)
+    json_response["items"] || []
   rescue => e
     Rails.logger.error("Error fetching book data from Google API: #{e.message}")
-    nil
+    []
   end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -90,6 +96,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :author, :genre, :description)
+      params.require(:book).permit(:title, :author, :genre, :description, :cover_image)
     end
 end

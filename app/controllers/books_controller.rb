@@ -1,3 +1,6 @@
+require 'net/http'
+require 'json'
+
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
@@ -14,6 +17,7 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
+    @google_book = fetch_book_details(@book.title)
   end
 
   # GET /books/new
@@ -64,6 +68,21 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def fetch_book_details(query)
+    base_url = "https://www.googleapis.com/books/v1/volumes"
+    api_key = ENV['GOOGLE_BOOKS_API_KEY']
+    url = "#{base_url}?q=#{URI.encode_www_form_component(query)}&key=#{api_key}"
+
+    response = Net::HTTP.get(URI(url))
+    json_response = JSON.parse(response)
+
+    json_response["items"]&.first&.dig("volumeInfo")  # Return the first book's info (if any)
+  rescue => e
+    Rails.logger.error("Error fetching book data from Google API: #{e.message}")
+    nil
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])

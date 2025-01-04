@@ -1,22 +1,27 @@
-<div id="<%= dom_id book %>">
-  <p>
-    <strong>Title:</strong>
-    <%= book.title %>
-  </p>
+<div class="book-details" id="<%= dom_id(book) %>">
+  <div class="card mb-4" style="border-radius: 10px; overflow: hidden;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <% if google_book && google_book["imageLinks"] %>
+          <img src="<%= google_book["imageLinks"]["thumbnail"] %>" alt="<%= book.title %> Cover" class="img-fluid rounded-start">
+        <% else %>
+          <p>No cover image available.</p>
+        <% end %>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><%= book.title %></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><%= book.author %></h6>
 
-  <p>
-    <strong>Author:</strong>
-    <%= book.author %>
-  </p>
+          <% if google_book && google_book["description"] %>
+            <p><strong>Description from Google:</strong> <%= google_book["description"] %></p>
+          <% else %>
+            <p>No description available from Google.</p>
+          <% end %>
 
-  <p>
-    <strong>Genre:</strong>
-    <%= book.genre %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= book.description %>
-  </p>
-
+          <p><strong>Summary:</strong> <%= book.description %></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

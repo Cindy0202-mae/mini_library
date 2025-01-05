@@ -28,8 +28,8 @@
                   <td><%= book.title %></td>
                   <td><%= book.author %></td>
                   <td><%= book.genre %></td>
-                  <td><%= truncate(book.description, length:100)%></td>
-                  <td>
+                  <td><%= truncate(book.description, length:50)%></td>
+                  <td class="actions">
                     <%= link_to book_path(book), class: "btn btn-sm btn-info me-2", title: "Show" do%>
                       <i class="fa fa-eye"></i>
                     <% end %>
@@ -61,6 +61,7 @@
               <% end %>
               <div class="card-body-search">
                 <h5 class="card-title"><%= google_book.dig("volumeInfo", "title") %></h5>
+                <%= button_to 'Add to Library', add_from_google_books_path, method: :post, params: { google_book: google_book.dig("volumeInfo") }, class: "btn btn-sm btn-success" %>
               </div>
             </div>
           </div>

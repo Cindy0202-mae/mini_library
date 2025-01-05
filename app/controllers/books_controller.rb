@@ -35,6 +35,25 @@ class BooksController < ApplicationController
   def edit
   end
 
+  # POST /books from google books
+  def add_from_google
+    google_book = params.require(:google_book).permit(:title, :description, authors: [], categories: [])
+    Rails.logger.debug "Google Book Params: #{google_book.inspect}"
+    @book = Book.new(
+      title: google_book[:title],
+      author: google_book[:authors]&.join(', '),
+      genre: google_book[:categories]&.join(', '),
+      description: google_book[:description]
+    )
+
+    if @book.save
+      redirect_to books_path, notice: 'Book was successfully added.'
+    else
+      Rails.logger.error "Failed to add book: #{@book.errors.full_messages.join(', ')}"
+      redirect_to books_path, alert: 'Failed to add book.'
+    end
+  end
+
   # POST /books or /books.json
   def create
     @book = Book.new(book_params)

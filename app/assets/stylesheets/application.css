@@ -1,14 +1,5 @@
-.fade-in {
-  animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.table-sm th, .table-sm td {
+  padding: 0.3rem;
 }
 
 .book-details {
@@ -72,27 +63,6 @@
   border-color: #545b62;
 }
 
-/* Section Spacing */
-.my-4 {
-  margin-top: 2rem !important;
-  margin-bottom: 2rem !important;
-}
-
-/* Card and Buttons Area */
-.d-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.d-flex a {
-  text-decoration: none;
-}
-
-.d-flex .btn {
-  margin-left: 10px;
-}
-
 .book-cover {
   display: block;
   margin-left: auto;
@@ -115,7 +85,7 @@
 
 .main-content {
   margin-top: 60px;
-  /* max-width: 1200px; */
+  max-width: 2000px;
 }
 
 .results {

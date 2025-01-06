@@ -130,3 +130,11 @@
   justify-content: space-around;
   align-items: center;
 }
+
+.btn-group .btn {
+  margin-right: 10px; /* Adjust the value as needed */
+}
+
+.btn-group .btn:last-child {
+  margin-right: 0;
+}

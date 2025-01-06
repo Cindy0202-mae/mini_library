@@ -24,23 +24,25 @@
             </thead>
             <tbody>
               <% @books.each do |book| %>
-                <tr>
-                  <td><%= book.title %></td>
-                  <td><%= book.author %></td>
-                  <td><%= book.genre %></td>
-                  <td><%= truncate(book.description, length:50)%></td>
-                  <td class="actions">
-                    <%= link_to book_path(book), class: "btn btn-sm btn-info me-2", title: "Show" do%>
-                      <i class="fa fa-eye"></i>
-                    <% end %>
-                    <%= link_to edit_book_path(book), class: "btn btn-sm btn-warning me-2", title: "Edit" do%>
-                      <i class="fa fa-pencil"></i>
-                    <% end %>
-                    <%= link_to book_path(book), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger", title: "Delete" do%>
-                      <i class="fa fa-trash"></i>
-                    <% end %>
-                  </td>
-                </tr>
+                <%= turbo_frame_tag dom_id(book) do %>
+                  <tr>
+                    <td><%= book.title %></td>
+                    <td><%= book.author %></td>
+                    <td><%= book.genre %></td>
+                    <td><%= truncate(book.description, length:50)%></td>
+                    <td class="actions">
+                      <%= link_to book_path(book), class: "btn btn-sm btn-info me-2", title: "Show" do%>
+                        <i class="fa fa-eye"></i>
+                      <% end %>
+                      <%= link_to edit_book_path(book), class: "btn btn-sm btn-warning me-2", title: "Edit" do%>
+                        <i class="fa fa-pencil"></i>
+                      <% end %>
+                      <%= link_to book_path(book),  data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-sm btn-danger", title: "Delete" do %>
+                        <i class="fa fa-trash"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
             </tbody>
           </table>

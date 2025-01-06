@@ -84,12 +84,8 @@ class BooksController < ApplicationController
 
   # DELETE /books/1 or /books/1.json
   def destroy
-    @book.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to books_path, status: :see_other, notice: "Book was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    @book.destroy
+    redirect_to books_path, status: :see_other, notice: "Book was successfully deleted."
   end
 
   private
